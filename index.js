@@ -35,3 +35,48 @@ function getForecast() {
                     console.log('\nNothing found.\n');
                     return exitApp();
                 } 
+
+                 //Display movie details
+                console.log(chalk.green('\n Here is the forecast for ' + answer.cityname.toUpperCase() + ': '));
+                console.log(chalk.yellow('Title: ') + data.query.results.channel.description);
+                console.log((chalk.yellow('Wind: ')) + (chalk.blue('Wind Chill; ')) + data.query.results.channel.wind.chill + ', ' + (chalk.blue('Wind Direction; ')) + data.query.results.channel.wind.direction + ', ' + (chalk.blue('Wind Speed; ')) + data.query.results.channel.wind.speed);
+                console.log((chalk.yellow('Atmosphere: ')) + (chalk.blue('Humidity; ')) + data.query.results.channel.atmosphere.humidity + ', ' + (chalk.blue('Pressure; ')) + data.query.results.channel.atmosphere.pressure + ', ' + (chalk.blue('Visibility; ')) + data.query.results.channel.atmosphere.visibility);
+                console.log((chalk.yellow('Astronomy: ')) + (chalk.blue('Sunrise at about; ')) + data.query.results.channel.astronomy.sunrise + ', ' + (chalk.blue('Sunset at about; ')) + data.query.results.channel.astronomy.sunset);
+                console.log((chalk.yellow('Geographical Coordinates: ')) + (chalk.blue('Longitude; ')) + data.query.results.channel.item.long + ', ' + (chalk.blue('Latitude; ')) + data.query.results.channel.item.lat);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[0].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[0].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.condition.text);
+                console.log(chalk.yellow("Tomorrow's Forecast: "));
+                console.log(chalk.yellow('Day/Date: ') + data.query.results.channel.item.forecast[1].day + ', ' + data.query.results.channel.item.forecast[1].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[1].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[1].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[1].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[2].day + ', ' + data.query.results.channel.item.forecast[2].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[2].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[2].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[2].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[3].day + ', ' + data.query.results.channel.item.forecast[3].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[3].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[3].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[3].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[4].day + ', ' + data.query.results.channel.item.forecast[4].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[4].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[4].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[4].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[5].day + ', ' + data.query.results.channel.item.forecast[5].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[5].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[5].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[5].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[6].day + ', ' + data.query.results.channel.item.forecast[6].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[6].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[6].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[6].text);
+               console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[7].day + ', ' + data.query.results.channel.item.forecast[7].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[7].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[7].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[7].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[8].day + ', ' + data.query.results.channel.item.forecast[8].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[8].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[8].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[8].text);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[9].day + ', ' + data.query.results.channel.item.forecast[9].date);
+                console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[9].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[9].high);
+                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[9].text);
+                                
+                exitApp();                 
+            });
+        });
+                
+          
+}
