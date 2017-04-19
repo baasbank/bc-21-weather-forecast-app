@@ -111,10 +111,12 @@ function exitApp() {
     ]
   } ]).then(function (answer) {
       
-        if(answer.option === 'No') return startApp();
-
-        if(answer.option === 'Yes') return console.log(chalk.yellow('*******Hope you liked it?******'));
-
+        if(answer.option === 'No') { 
+           return startApp();
+        }
+        if(answer.option === 'Yes') {
+          return console.log(chalk.yellow('*******Hope you liked it?******'));
+        }
     });
 }
 
