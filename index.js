@@ -64,7 +64,7 @@ function getForecast() {
                 console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[6].day + ', ' + data.query.results.channel.item.forecast[6].date);
                 console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[6].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[6].high);
                 console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[6].text);
-               console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[7].day + ', ' + data.query.results.channel.item.forecast[7].date);
+                console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[7].day + ', ' + data.query.results.channel.item.forecast[7].date);
                 console.log((chalk.yellow('Temperature: ')) + (chalk.blue('Low; ')) + data.query.results.channel.item.forecast[7].low + ', ' + (chalk.blue('High; ')) + data.query.results.channel.item.forecast[7].high);
                 console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.forecast[7].text);
                 console.log(chalk.yellow('Forecast for: ') + data.query.results.channel.item.forecast[8].day + ', ' + data.query.results.channel.item.forecast[8].date);
@@ -77,6 +77,24 @@ function getForecast() {
                 exitApp();                 
             });
         });
-                
-          
+}
+
+//Function that starts the application
+function startApp() {
+    inquirer.prompt([ {
+    type: 'list',
+    name: 'option',
+    message: 'What do you want to do?',
+    choices: [
+      //'Search for a book (e.g: Things fall apart)',
+      //'Search for a movie (e.g: The expendables)',
+      'Get weather forecasts',
+    ]
+  } ]).then(function (answer) {
+
+        if(answer.option === 'Get weather forecasts'){
+            getForecast();
+        }
+
+    });
 }
