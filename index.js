@@ -2,7 +2,8 @@
 
 var request = require('request'), chalk = require('chalk'),
     clear   = require('clear'), Spinner     = require('clui').Spinner,
-    figlet  = require('figlet'), inquirer    = require('inquirer');
+    figlet  = require('figlet'), inquirer    = require('inquirer'),
+    fs = require('fs');
     
 clear();
 console.log(chalk.green(figlet.textSync('Here you go!', { horizontalLayout: 'full' })));
@@ -21,18 +22,22 @@ function getForecast() {
 
 
             var status = new Spinner("I'll get your forecast in a jiffy...");
-            status.start();
+            status.start(); 
             request(link, function (err, res, data){
                 if (err) {
                     return console.log(err);
-                } 
+                }
+                 fs.appendFile('recent.json', data , function (err) {
+                    if (err) return console.log(err);
+                    //console.log(data);
+                    }); 
 
                 data = JSON.parse(data);
                 status.stop();
 
                 //Exit if nothing was found
                 if (data === '') {
-                    console.log('\nNothing found.\n');
+                    console.log('\nLocation not in database.\n');
                     return exitApp();
                 } 
 
