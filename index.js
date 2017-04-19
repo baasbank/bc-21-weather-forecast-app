@@ -6,3 +6,10 @@ var request = require('request'), chalk = require('chalk'),
     
 clear();
 console.log(chalk.green(figlet.textSync('Here you go!', { horizontalLayout: 'full' })));
+
+function getForecast() {
+    inquirer.prompt([ {
+            type: 'input',
+            name: 'cityname',
+            message: 'What city do you want forecasts for?'
+        },
