@@ -163,7 +163,7 @@ function exitApp() {
            return startApp();
         }
         if(answer.option === 'Yes') {
-          return console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
+          return console.log(chalk.yellow('\n\t\t\t You can find all your recently searched weather information in the recent.json file in this directory'));
         }
     });
 }
