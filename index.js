@@ -22,7 +22,7 @@ function getForecast() {
     inquirer.prompt([ {
             type: 'input',
             name: 'cityname',
-            message: 'What city do you want forecasts for?'
+            message: '\t\t\t\t\t What city do you want forecasts for?'
         },
 
         ]).then(function (answer) {
@@ -51,15 +51,27 @@ function getForecast() {
                 } 
 
                  //Display movie details
-                let today = new Date();
-                console.log(chalk.green('\n Here is the forecast for ' + answer.cityname.toUpperCase() + ' ' +today +': '));
-                console.log(chalk.yellow('Title: ') + data.query.results.channel.description);
-                console.log((chalk.yellow('Wind: ')) + (chalk.green('Wind Chill; ')) + data.query.results.channel.wind.chill + ', ' + (chalk.green('Wind Direction; ')) + data.query.results.channel.wind.direction + ', ' + (chalk.green('Wind Speed; ')) + data.query.results.channel.wind.speed);
-                console.log((chalk.yellow('Atmosphere: ')) + (chalk.green('Humidity; ')) + data.query.results.channel.atmosphere.humidity + ', ' + (chalk.green('Pressure; ')) + data.query.results.channel.atmosphere.pressure + ', ' + (chalk.green('Visibility; ')) + data.query.results.channel.atmosphere.visibility);
-                console.log((chalk.yellow('Astronomy: ')) + (chalk.green('Sunrise at about; ')) + data.query.results.channel.astronomy.sunrise + ', ' + (chalk.green('Sunset at about; ')) + data.query.results.channel.astronomy.sunset);
-                console.log((chalk.yellow('Geographical Coordinates: ')) + (chalk.green('Longitude; ')) + data.query.results.channel.item.long + ', ' + (chalk.green('Latitude; ')) + data.query.results.channel.item.lat);
-                console.log((chalk.yellow('Temperature: ')) + (chalk.green('Low; ')) + data.query.results.channel.item.forecast[0].low + ', ' + (chalk.green('High; ')) + data.query.results.channel.item.forecast[0].high);
-                console.log(chalk.yellow('Condition: ') + data.query.results.channel.item.condition.text);
+                 console.log('\t\t\t********************************************************************************');
+                //console.log(chalk.green('\n Here is the forecast for ' + answer.cityname.toUpperCase())); ...+ ' ' +today +': '));
+                console.log(chalk.yellow('\n\t\t\t\t\t' + data.query.results.channel.description));
+                console.log('\t\t\t\t-------------------------------------------------------------'); 
+                console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
+                console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill);
+                console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + data.query.results.channel.wind.direction);
+                console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed);
+                console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
+                console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity);
+                console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure);
+                console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility);
+                console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
+                console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunrise);
+                console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunset);
+                console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
+                console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low);
+                console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high);
+                console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
+                console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
+                console.log('\n');
                 
                 exitApp();                 
             });
@@ -70,7 +82,7 @@ function getCoordinates() {
     inquirer.prompt([ {
             type: 'input',
             name: 'cityname',
-            message: 'What city do you want coordinates for?'
+            message: '\t\t\t\t\t What city do you want coordinates for?'
         },
 
         ]).then(function (answer) {
@@ -96,24 +108,26 @@ function getCoordinates() {
                 } 
 
                  //Display movie details
-                console.log(chalk.green('\n Here are the coordinates for ' + answer.cityname.toUpperCase() + ': '));
-                
+               console.log('\t\t\t********************************************************************************');
                
-                console.log((chalk.yellow('Geographical Coordinates: ')) + (chalk.blue('Longitude; ')) + data.query.results.channel.item.long + ', ' + (chalk.blue('Latitude; ')) + data.query.results.channel.item.lat);
+                console.log(chalk.yellow('\t\t\t\t\t\tGeographical Coordinates for ' + answer.cityname.toUpperCase() + ': ')); 
+                console.log('\t\t\t\t-------------------------------------------------------------'); 
+                console.log(chalk.green('\n\t\t\t\t\t   Longitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.long);
+                console.log(chalk.green('\n\t\t\t\t\t   Latitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.lat);
+                console.log('');
                 exitApp();
 
               
             });
         });
 }
-            
 
 //Function that starts the application
 function startApp() {
     inquirer.prompt([ {
     type: 'list',
     name: 'option',
-    message: 'What do you want to do?',
+    message: '\t\t\t\t\t What do you want to do?',
     choices: [
       //'Search for a book (e.g: Things fall apart)',
       //'Search for a movie (e.g: The expendables)',
@@ -138,7 +152,7 @@ function exitApp() {
     inquirer.prompt([ {
     type: 'list',
     name: 'option',
-    message: 'Exit?',
+    message: '\t\t\t\t\t Exit?',
     choices: [
       'Yes',
       'No',
@@ -149,7 +163,7 @@ function exitApp() {
            return startApp();
         }
         if(answer.option === 'Yes') {
-          return console.log(chalk.yellow('*******Hope you liked it?******'));
+          return console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
         }
     });
 }
