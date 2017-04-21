@@ -22,7 +22,7 @@ function getForecast() {
     inquirer.prompt([ {
             type: 'input',
             name: 'cityname',
-            message: '\t\t\t\t\t What city do you want forecasts for?'
+            message: '\nWhat city/area code do you want forecasts for?'
         },
 
         ]).then(function (answer) {
@@ -57,23 +57,23 @@ function getForecast() {
 
                 //Display weather data
 
-                    console.log('\t\t\t********************************************************************************');
+                    console.log('\n\t\t\t********************************************************************************');
                     console.log(chalk.yellow('\n\t\t\t\t\t' + data.query.results.channel.description));
                     console.log('\t\t\t\t-------------------------------------------------------------'); 
                     console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
-                    console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill);
+                    console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill + 'F');
                     console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + data.query.results.channel.wind.direction);
-                    console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed);
+                    console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed + 'mph');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
-                    console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity);
-                    console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure);
-                    console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility);
+                    console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity + 'g/m^3');
+                    console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure + 'Pa');
+                    console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility + 'mi');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
                     console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunrise);
                     console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunset);
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
-                    console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low);
-                    console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high);
+                    console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low + 'F');
+                    console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high + 'F');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
                     console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
                     console.log('\n');
@@ -88,7 +88,7 @@ function getCoordinates() {
     inquirer.prompt([ {
             type: 'input',
             name: 'cityname',
-            message: '\t\t\t\t\t What city do you want coordinates for?'
+            message: '\nWhat city/area code do you want coordinates for?'
         },
 
         ]).then(function (answer) {
@@ -120,7 +120,7 @@ function getCoordinates() {
                     }
                     else {
                     
-                        console.log('\t\t\t********************************************************************************');
+                        console.log('\n\t\t\t********************************************************************************');
                         console.log(chalk.yellow('\t\t\t\t\t\tGeographical Coordinates for ' + answer.cityname.toUpperCase() + ': ')); 
                         console.log('\t\t\t\t-------------------------------------------------------------'); 
                         console.log(chalk.green('\n\t\t\t\t\t   Longitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.long);
@@ -140,7 +140,7 @@ function startApp() {
     inquirer.prompt([ {
     type: 'list',
     name: 'option',
-    message: '\t\t\t\t\t What do you want to do?',
+    message: '\nWhat do you want to do?',
     choices: [
       'Get weather forecast',
       'Get geographical coordinates'
@@ -163,7 +163,7 @@ function exitApp() {
     inquirer.prompt([ {
     type: 'list',
     name: 'option',
-    message: '\t\t\t\t\t Exit?',
+    message: '\nExit?',
     choices: [
       'Yes',
       'No',
@@ -177,7 +177,7 @@ function exitApp() {
             inquirer.prompt([ {
                 type: 'list',
                 name: 'option',
-                message: '\n\t\t\t\t\t Do you want to view forecast search history?',
+                message: '\nDo you want to view forecast search history?',
                 choices: [
                 'Yes',
                 'No',
@@ -206,7 +206,7 @@ function exitApp() {
 
 //Invalid input handler
 function notValid() {
-    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name and try again.\n"));
+    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name, check your network connection and try again.\n"));
     return exitApp();
 }
 
