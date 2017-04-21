@@ -1,5 +1,6 @@
 'use strict';
 
+//Require dependencies
 var request = require('request'),
     clear   = require('clear'),
     figlet  = require('figlet'),
@@ -18,6 +19,7 @@ console.log('\t=================================================================
 console.log('\n\n');
 
 
+// Function to get forecast
 function getForecast() {
     inquirer.prompt([ {
             type: 'input',
@@ -26,7 +28,7 @@ function getForecast() {
         },
 
         ]).then(function (answer) {
-            //Reformat cityname to fit query
+            //Reformat cityname to fit API query
             var cityname    = answer.cityname.split(/\s+/).join('%20');
             var link = ' https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+cityname+'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
 
@@ -84,6 +86,7 @@ function getForecast() {
         });
 }
 
+// Function to get coordinates
 function getCoordinates() {
     inquirer.prompt([ {
             type: 'input',
