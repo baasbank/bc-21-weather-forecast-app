@@ -26,7 +26,7 @@ function getForecast() {
         },
 
         ]).then(function (answer) {
-            //Reformat movie title to fit query
+            //Reformat cityname to fit query
             var cityname    = answer.cityname.split(/\s+/).join('%20');
             var link = ' https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+cityname+'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
 
@@ -44,47 +44,41 @@ function getForecast() {
                 data = JSON.parse(data);
                 status.stop();
 
-                 //Handle Invalid inputs
+                // If API returns an error
+                if (data.error){
+                    return notValid();
+                }
 
-                    if (data.error){
-                        return notValid();
-                    }
+                // If API returns an empty dataset
+                if (data.query.count === 0) {
+                    return notValid();
+                }
+                else {
 
-                    if (data.query.count === 0) {
-                        return notValid();
-                    }
-                    else {
-                
-                //Exit if nothing was found
-                // if (data === '') {
-                //     console.log('\nLocation not in database.\n');
-                //     return exitApp();
-                // } 
+                //Display weather data
 
-                 //Display movie details
-                 console.log('\t\t\t********************************************************************************');
-                //console.log(chalk.green('\n Here is the forecast for ' + answer.cityname.toUpperCase())); ...+ ' ' +today +': '));
-                console.log(chalk.yellow('\n\t\t\t\t\t' + data.query.results.channel.description));
-                console.log('\t\t\t\t-------------------------------------------------------------'); 
-                console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
-                console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill);
-                console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + data.query.results.channel.wind.direction);
-                console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed);
-                console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
-                console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity);
-                console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure);
-                console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility);
-                console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
-                console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunrise);
-                console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunset);
-                console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
-                console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low);
-                console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high);
-                console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
-                console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
-                console.log('\n');
-                
-                exitApp();
+                    console.log('\t\t\t********************************************************************************');
+                    console.log(chalk.yellow('\n\t\t\t\t\t' + data.query.results.channel.description));
+                    console.log('\t\t\t\t-------------------------------------------------------------'); 
+                    console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
+                    console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill);
+                    console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + data.query.results.channel.wind.direction);
+                    console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed);
+                    console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
+                    console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity);
+                    console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure);
+                    console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility);
+                    console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
+                    console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunrise);
+                    console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunset);
+                    console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
+                    console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low);
+                    console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high);
+                    console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
+                    console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
+                    console.log('\n');
+                    
+                    exitApp();
                     }                 
             });
         });
@@ -116,26 +110,17 @@ function getCoordinates() {
                     data = JSON.parse(data);
                     status.stop();
 
-                    //Handle Invalid inputs
-
+                    // If the API returns an error
                     if (data.error){
                         return notValid();
                     }
-
+                    // If the API returns an empty dataset
                     if (data.query.count === 0) {
                         return notValid();
                     }
                     else {
-                    //Exit if nothing was found
-                    // if (data === '') {
-                    //     console.log('\nNothing found.\n');
-                    //     return exitApp();
-                    // } 
-
-                    //Display weather  data
-                    //console.log(chalk.green('\n\t\t\t\t\t Here are the coordinates for ' + answer.cityname.toUpperCase() + ': '));
-                        console.log('\t\t\t********************************************************************************');
                     
+                        console.log('\t\t\t********************************************************************************');
                         console.log(chalk.yellow('\t\t\t\t\t\tGeographical Coordinates for ' + answer.cityname.toUpperCase() + ': ')); 
                         console.log('\t\t\t\t-------------------------------------------------------------'); 
                         console.log(chalk.green('\n\t\t\t\t\t   Longitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.long);
@@ -157,8 +142,6 @@ function startApp() {
     name: 'option',
     message: '\t\t\t\t\t What do you want to do?',
     choices: [
-      //'Search for a book (e.g: Things fall apart)',
-      //'Search for a movie (e.g: The expendables)',
       'Get weather forecast',
       'Get geographical coordinates'
     ]
@@ -191,8 +174,31 @@ function exitApp() {
            return startApp();
         }
         if(answer.option === 'Yes') {
-            console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
-            console.log(chalk.gray('\n\t\t You can find all your recently searched weather information in the `recent.json` file in this directory\n\n'));
+            inquirer.prompt([ {
+                type: 'list',
+                name: 'option',
+                message: '\n\t\t\t\t\t Do you want to view forecast search history?',
+                choices: [
+                'Yes',
+                'No',
+                ]
+            } ]).then(function (answer) { 
+                if (answer.option === 'Yes') {
+                    try {  
+                        var data = fs.readFileSync('recent.json', 'utf8');
+                        console.log(data);    
+                    } catch(e) {
+                        console.log('Error:', e.stack);
+                    }
+                    console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
+                }
+
+                if (answer.option === 'No') {
+                    console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
+                    console.log(chalk.gray('\n\t\t\t You can find all searched weather information in the `recent.json` file in this directory.\n\n'));
+                }
+            });
+           
         }
 
     });
@@ -200,7 +206,7 @@ function exitApp() {
 
 //Invalid input handler
 function notValid() {
-    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name and try again\n"));
+    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name and try again.\n"));
     return exitApp();
 }
 
