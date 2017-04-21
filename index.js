@@ -163,7 +163,8 @@ function exitApp() {
            return startApp();
         }
         if(answer.option === 'Yes') {
-          return console.log(chalk.yellow('\n\t\t\t You can find all your recently searched weather information in the recent.json file in this directory'));
+            console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
+            console.log(chalk.yellow('\n\t\t You can find all your recently searched weather information in the `recent.json` file in this directory\n\n'));
         }
     });
 }
