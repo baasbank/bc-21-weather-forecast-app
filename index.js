@@ -163,7 +163,7 @@ function exitApp() {
     inquirer.prompt([ {
     type: 'list',
     name: 'option',
-    message: '\nExit?',
+    message: '\nDo you wish to exit?',
     choices: [
       'Yes',
       'No',
@@ -206,7 +206,7 @@ function exitApp() {
 
 //Invalid input handler
 function notValid() {
-    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name, check your network connection and try again.\n"));
+    console.log(chalk.red("\n\t\t\t\ Data not found for this location. Make sure you are entering a real city or big town name, check your network connection and try again.\n"));
     return exitApp();
 }
 
