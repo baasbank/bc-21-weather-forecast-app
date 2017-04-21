@@ -44,11 +44,22 @@ function getForecast() {
                 data = JSON.parse(data);
                 status.stop();
 
+                 //Handle Invalid inputs
+
+                    if (data.error){
+                        return notValid();
+                    }
+
+                    if (data.query.count === 0) {
+                        return notValid();
+                    }
+                    else {
+                
                 //Exit if nothing was found
-                if (data === '') {
-                    console.log('\nLocation not in database.\n');
-                    return exitApp();
-                } 
+                // if (data === '') {
+                //     console.log('\nLocation not in database.\n');
+                //     return exitApp();
+                // } 
 
                  //Display movie details
                  console.log('\t\t\t********************************************************************************');
@@ -73,7 +84,8 @@ function getForecast() {
                 console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
                 console.log('\n');
                 
-                exitApp();                 
+                exitApp();
+                    }                 
             });
         });
 }
@@ -86,41 +98,57 @@ function getCoordinates() {
         },
 
         ]).then(function (answer) {
-            //Reformat movie title to fit query
-            var cityname    = answer.cityname.split(/\s+/).join('%20');
-            var link = ' https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+cityname+'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
+           
+
+            
+                //Reformat city name to fit query
+                var cityname    = answer.cityname.split(/\s+/).join('%20');
+                var link = ' https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22'+cityname+'%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
 
 
-            var status = new Spinner("I'll get your coordinates in a jiffy...");
-            status.start();
-            request(link, function (err, res, data){
-                if (err) {
-                    return console.log(err);
-                } 
+                var status = new Spinner("I'll get your coordinates in a jiffy...");
+                status.start();
+                request(link, function (err, res, data){
+                    if (err) {
+                        return console.log(err);
+                    } 
 
-                data = JSON.parse(data);
-                status.stop();
+                    data = JSON.parse(data);
+                    status.stop();
 
-                //Exit if nothing was found
-                if (data === '') {
-                    console.log('\nNothing found.\n');
-                    return exitApp();
-                } 
+                    //Handle Invalid inputs
 
-                 //Display movie details
-               console.log('\t\t\t********************************************************************************');
-               
-                console.log(chalk.yellow('\t\t\t\t\t\tGeographical Coordinates for ' + answer.cityname.toUpperCase() + ': ')); 
-                console.log('\t\t\t\t-------------------------------------------------------------'); 
-                console.log(chalk.green('\n\t\t\t\t\t   Longitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.long);
-                console.log(chalk.green('\n\t\t\t\t\t   Latitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.lat);
-                console.log('');
-                exitApp();
+                    if (data.error){
+                        return notValid();
+                    }
 
-              
-            });
+                    if (data.query.count === 0) {
+                        return notValid();
+                    }
+                    else {
+                    //Exit if nothing was found
+                    // if (data === '') {
+                    //     console.log('\nNothing found.\n');
+                    //     return exitApp();
+                    // } 
+
+                    //Display weather  data
+                    //console.log(chalk.green('\n\t\t\t\t\t Here are the coordinates for ' + answer.cityname.toUpperCase() + ': '));
+                        console.log('\t\t\t********************************************************************************');
+                    
+                        console.log(chalk.yellow('\t\t\t\t\t\tGeographical Coordinates for ' + answer.cityname.toUpperCase() + ': ')); 
+                        console.log('\t\t\t\t-------------------------------------------------------------'); 
+                        console.log(chalk.green('\n\t\t\t\t\t   Longitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.long);
+                        console.log(chalk.green('\n\t\t\t\t\t   Latitude ') + '\t\t| ' + '\t   ' + data.query.results.channel.item.lat);
+                        console.log('');
+                        exitApp();
+
+                    }
+                });
+                
         });
 }
+            
 
 //Function that starts the application
 function startApp() {
@@ -164,9 +192,16 @@ function exitApp() {
         }
         if(answer.option === 'Yes') {
             console.log(chalk.yellow('\n\t\t\t **********************************Thanks!********************************************'));
-            console.log(chalk.yellow('\n\t\t You can find all your recently searched weather information in the `recent.json` file in this directory\n\n'));
+            console.log(chalk.gray('\n\t\t You can find all your recently searched weather information in the `recent.json` file in this directory\n\n'));
         }
+
     });
+}
+
+//Invalid input handler
+function notValid() {
+    console.log(chalk.red("\n\t\t\t\ Data couldn't be found for this location. Make sure you are entering a real city or big town name and try again\n"));
+    return exitApp();
 }
 
 startApp();
