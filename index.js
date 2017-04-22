@@ -11,7 +11,7 @@ var request = require('request'),
 clear();
 console.log('\t===============================================================================================================================');
 console.log(
-  chalk.green(
+  chalk.yellow(
     figlet.textSync('            Weatherman      ', { horizontalLayout: 'full' })
   )
 );
@@ -38,12 +38,10 @@ function getForecast() {
             request(link, function (err, res, data){
                 if (err) {
                     return console.log(err);
-                }
-                 fs.appendFile('recent.json', data , function (err) {
-                    if (err) return console.log(err);
-                    }); 
+                } 
 
                 data = JSON.parse(data);
+            
                 status.stop();
 
                 // If API returns an error
@@ -56,28 +54,47 @@ function getForecast() {
                     return notValid();
                 }
                 else {
+                    //Filter details from the API result
+                    let result = {};
+                    result['description'] =data.query.results.channel.description;
+                    result['windChill'] = data.query.results.channel.wind.chill;
+                    result['windDirection'] = data.query.results.channel.wind.direction;
+                    result['windSpeed'] = data.query.results.channel.wind.speed;
+                    result['humidity'] = data.query.results.channel.atmosphere.humidity;
+                    result['pressure'] = data.query.results.channel.atmosphere.pressure;
+                    result['visibility'] = data.query.results.channel.atmosphere.visibility;
+                    result['sunrise'] = data.query.results.channel.astronomy.sunrise;
+                    result['sunset'] = data.query.results.channel.astronomy.sunset;
+                    result['low'] = data.query.results.channel.item.forecast[0].low;
+                    result['high'] = data.query.results.channel.item.forecast[0].high;
+                    result['condition'] = data.query.results.channel.item.condition.text;
 
-                //Display weather data
+                    // Write history to file
+                    fs.appendFile('recent.json', JSON.stringify(result) + '#' , function (err) {
+                        if (err) return console.log(err);
+                    }); 
+                   
+                   //Display weather data
 
                     console.log('\n\t\t\t********************************************************************************');
-                    console.log(chalk.yellow('\n\t\t\t\t\t' + data.query.results.channel.description));
+                    console.log(chalk.yellow('\n\t\t\t\t\t' + result['description']));
                     console.log('\t\t\t\t-------------------------------------------------------------'); 
                     console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
-                    console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + data.query.results.channel.wind.chill + 'F');
-                    console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + data.query.results.channel.wind.direction);
-                    console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + data.query.results.channel.wind.speed + 'mph');
+                    console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + result['windChill'] + 'F');
+                    console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + result['windDirection']);
+                    console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + result['windSpeed'] + 'mph');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
-                    console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.humidity + 'g/m^3');
-                    console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.pressure + 'Pa');
-                    console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + data.query.results.channel.atmosphere.visibility + 'mi');
+                    console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + result['humidity'] + 'g/m^3');
+                    console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + result['pressure'] + 'Pa');
+                    console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + result['visibility'] + 'mi');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
-                    console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunrise);
-                    console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + data.query.results.channel.astronomy.sunset);
+                    console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + result['sunrise']);
+                    console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + result['sunset']);
                     console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
-                    console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].low + 'F');
-                    console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + data.query.results.channel.item.forecast[0].high + 'F');
+                    console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + result['low'] + 'F');
+                    console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + result['high'] + 'F');
                     console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
-                    console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + data.query.results.channel.item.condition.text);
+                    console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + result['condition']);
                     console.log('\n');
                     
                     exitApp();
@@ -188,8 +205,35 @@ function exitApp() {
             } ]).then(function (answer) { 
                 if (answer.option === 'Yes') {
                     try {  
+
+                        //Display user's search history
                         var data = fs.readFileSync('recent.json', 'utf8');
-                        console.log(data);    
+                        let history = data.split("#");
+                        console.log('\nYour History************************************"')
+                        let result;
+                        for(let i=0; i< history.length - 1; i++){
+                            result = JSON.parse(history[i]);
+                            console.log(`\n\t\t\tHistory ${i+1}  ********************************************************************************`);
+                            console.log(chalk.yellow('\n\t\t\t\t\t' + result['description']));
+                            console.log('\t\t\t\t-------------------------------------------------------------'); 
+                            console.log((chalk.yellow('\t\t\t\t\t\t\t\tWind')));  
+                            console.log(chalk.green('\t\t\t\t\t Wind Chill') + '\t\t |' + '\t\t' + result['windChill'] + 'F');
+                            console.log(chalk.green('\t\t\t\t\t Wind Direction') + '\t\t |' + '\t\t' + result['windDirection']);
+                            console.log(chalk.green('\t\t\t\t\t Wind Speed') + '\t\t |' + '\t\t' + result['windSpeed'] + 'mph');
+                            console.log((chalk.yellow('\t\t\t\t\t\t\t      Atmosphere')));
+                            console.log(chalk.green('\t\t\t\t\t Humidity') + '\t\t |' + '\t\t' + result['humidity'] + 'g/m^3');
+                            console.log(chalk.green('\t\t\t\t\t Pressure') + '\t\t |' + '\t\t' + result['pressure'] + 'Pa');
+                            console.log(chalk.green('\t\t\t\t\t Visibility') + '\t\t |' + '\t\t' + result['visibility'] + 'mi');
+                            console.log((chalk.yellow('\t\t\t\t\t\t\t      Astronomy')));
+                            console.log(chalk.green('\t\t\t\t\t Sunrise at') + '\t\t |' + '\t\t' + result['sunrise']);
+                            console.log(chalk.green('\t\t\t\t\t Sunset at') + '\t\t |' + '\t\t' + result['sunset']);
+                            console.log((chalk.yellow('\t\t\t\t\t\t\t      Temperature')));
+                            console.log(chalk.green('\t\t\t\t\t Low') + '\t\t\t |' + '\t\t' + result['low'] + 'F');
+                            console.log(chalk.green('\t\t\t\t\t High') + '\t\t\t |' + '\t\t' + result['high'] + 'F');
+                            console.log((chalk.yellow('\t\t\t\t\t\t\t ++++++++++++++++++')));
+                            console.log(chalk.green('\t\t\t\t\t Condition') + '\t\t |' + '\t\t' + result['condition']);
+                            console.log('\n');
+                        }  
                     } catch(e) {
                         console.log('Error:', e.stack);
                     }
