@@ -29,7 +29,6 @@ This App makes use of the following dependencies:
 ## How to run this App
 + Clone this repository using the command : `git clone https://github.com/baasbank/bc-21-weather-forecast-app.git`
 + Navigate to the root folder
-+ Delete the `recent.json` file in the directory; a new one is automatically created to hold each user's search history.
 + Run  `npm install`
 + Run  `node index.js`
 + Follow on-screen instructions
